@@ -638,6 +638,7 @@ GameObject:
   - component: {fileID: 1138881712}
   - component: {fileID: 1138881711}
   - component: {fileID: 1138881716}
+  - component: {fileID: 1138881717}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -777,6 +778,21 @@ MonoBehaviour:
   GetInput: {fileID: 113984728}
   speed: 10
   smoothTime: 0.2
+--- !u!114 &1138881717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1138881710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a22c4bd87ee4f642ab9958d50bfc37c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InputSub: {fileID: 113984728}
+  bulletSpawnTransform: {fileID: 416314021}
+  bulletPrefab: {fileID: 720831654961670522, guid: cdc83fe5ee1649243a2fd4c1abd57340, type: 3}
 --- !u!1 &1139642047
 GameObject:
   m_ObjectHideFlags: 0
