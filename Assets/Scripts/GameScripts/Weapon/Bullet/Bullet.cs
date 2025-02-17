@@ -12,7 +12,7 @@ public class Bullet : MonoBehaviour,IPoolable
     private Rigidbody rb;
     public event Action<IPoolable> Destroyed;
     public GameObject GameObject => gameObject;
-    private float Timer;
+    [SerializeField]private float Timer=0;
 
     private void Start()
     {
@@ -22,12 +22,12 @@ public class Bullet : MonoBehaviour,IPoolable
     {
         if (bulletSpeed > 0)
         {
-            Timer = 0;
             rb.velocity = new Vector3(bulletDirection.x,0,bulletDirection.y)*bulletSpeed;
             Timer += Time.deltaTime;
-            if(Timer > bulletLife)
+            if (Timer > bulletLife)
             {
                 Reset();
+                Debug.Log("Reset BulletTimer");
             }
         }
     }
@@ -36,18 +36,21 @@ public class Bullet : MonoBehaviour,IPoolable
         bulletSpeed = speed;
         bulletDamage = damage;
         bulletDirection = dir;
+        Timer = 0;
     }
     private void OnTriggerEnter(Collider other)
     {
         IDamagatble damagable = other.GetComponent<IDamagatble>();
-        if (damagable != null)
+        if (damagable != null && other.CompareTag("Bullet")==false)
         {
             damagable.GetDamage(bulletDamage);
-           // Reset();
+            Reset();
+            Debug.Log("Reset BulletTrigger");
         }
-        else
+        else if(!other.CompareTag("Bullet")&& !other.CompareTag("Hero"))
         {
-           // Reset();
+            Reset();
+            Debug.Log("Reset Trigger");
         }
     }
     public void Reset()

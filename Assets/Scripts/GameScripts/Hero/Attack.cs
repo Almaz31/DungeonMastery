@@ -8,26 +8,83 @@ public class Attack : MonoBehaviour
     [SerializeField] InputSubscription InputSub;
     [SerializeField] Transform bulletSpawnTransform;
     [SerializeField]Bullet bulletPrefab;
+    [SerializeField] bool isTest;
+    [SerializeField] private float attackSpeedTest = 1f;
+    [SerializeField] private float reloadingTest = 3f;
+    [SerializeField] private float bulletSpeedTest = 3f;
+    [SerializeField] private int bulletDamageTest = 10;
     private Weapon currentWeapon;
-    // Start is called before the first frame update
+    private bool Reloading;
+    private bool isShooting = false;
+    private int currentCapicity;
+    private float ReloadTimer;
+    private float ReloadWeapon;
+    private float bulletSpeed;
+    private int bulletDamage;
+
+
     void Start()
     {
         currentWeapon = new Pistol();
+        currentCapicity = currentWeapon.Capacity;
+        ReloadWeapon = isTest ? reloadingTest : currentWeapon.ReloadTime;
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-        if (InputSub.AttackInput)
+        if (InputSub.AttackInput && !Reloading&&!isShooting)
         {
-            Debug.Log("Attack");
-            Vector2 dir = GetAttackDir();
-            Bullet bullet = PoolObject.Instance.GetObject(bulletPrefab);
-            bullet.transform.position = bulletSpawnTransform.position;
-            bullet.SetParametrsOfBullet(currentWeapon.BulletSpeed, currentWeapon.Damage, dir);
+            isShooting = true;
+            Shoot();
         }
+        if (Reloading)
+        {
+            ReloadTimer += Time.deltaTime;
+            if (ReloadTimer >= ReloadWeapon)
+            {
+                Reloading= false;
+                currentCapicity= currentWeapon.Capacity;
+                ReloadTimer = 0;
+            }
+        }
+
     }
-    Vector2 GetAttackDir()
+    void Shoot()
+    {
+        if (currentCapicity > 0)
+        {
+            StartCoroutine(ShootCoroutine());
+            Debug.Log("Start shooting");
+
+        }
+        else
+        {
+            isShooting = false;
+            Debug.Log("Stop shooting");
+            StopAllCoroutines();
+            Reloading = true;
+        }
+
+    }
+    private IEnumerator ShootCoroutine()
+    {
+        isShooting = true;
+        float attSpeed = isTest ? attackSpeedTest : currentWeapon.AttackSpeed;
+        bulletSpeed = isTest ? bulletSpeedTest : currentWeapon.BulletSpeed;
+        bulletDamage = isTest ? bulletDamageTest : currentWeapon.Damage;
+
+        Vector2 dir = GetAttackDir();
+        
+        Bullet bullet = PoolObject.Instance.GetObject(bulletPrefab);
+        Vector3 worldPosition = bulletSpawnTransform.parent.TransformPoint(bulletSpawnTransform.localPosition);
+        bullet.transform.position = worldPosition;
+        bullet.SetParametrsOfBullet(bulletSpeed, bulletDamage, dir);
+        currentCapicity -= 1;
+        yield return new WaitForSeconds(1f / attSpeed);
+        isShooting = false;
+    }
+    private Vector2 GetAttackDir()
     {
         Vector3 mouseScreenPos = Input.mousePosition;
         mouseScreenPos.z = Camera.main.WorldToScreenPoint(transform.position).z;
@@ -36,4 +93,6 @@ public class Attack : MonoBehaviour
         Vector2 attackDirection2D = new Vector2(attackDirection.x, attackDirection.y);
         return attackDirection2D;
     }
+    
+
 }
