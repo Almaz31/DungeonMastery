@@ -55,13 +55,11 @@ public class Attack : MonoBehaviour
         if (currentCapicity > 0)
         {
             StartCoroutine(ShootCoroutine());
-            Debug.Log("Start shooting");
 
         }
         else
         {
             isShooting = false;
-            Debug.Log("Stop shooting");
             StopAllCoroutines();
             Reloading = true;
         }
@@ -79,6 +77,7 @@ public class Attack : MonoBehaviour
         Bullet bullet = PoolObject.Instance.GetObject(bulletPrefab);
         Vector3 worldPosition = bulletSpawnTransform.parent.TransformPoint(bulletSpawnTransform.localPosition);
         bullet.transform.position = worldPosition;
+        bullet.transform.rotation = transform.rotation;
         bullet.SetParametrsOfBullet(bulletSpeed, bulletDamage, dir);
         currentCapicity -= 1;
         yield return new WaitForSeconds(1f / attSpeed);
