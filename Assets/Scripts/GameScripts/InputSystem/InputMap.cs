@@ -62,6 +62,51 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FirstSlot"",
+                    ""type"": ""Button"",
+                    ""id"": ""0c17c5c4-0280-489c-bd97-86d14ed951bb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SecondSlot"",
+                    ""type"": ""Button"",
+                    ""id"": ""a1bffb6d-caf3-4e8b-9c3d-850e6a9c1b56"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ThirdSlot"",
+                    ""type"": ""Button"",
+                    ""id"": ""b59a5b0a-6f88-4735-b22c-a3b2f2c2a544"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FourthSlot"",
+                    ""type"": ""Button"",
+                    ""id"": ""d5b43742-0ca3-4546-ae17-b7943d89cd7a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ScrollSlot"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""8db443f1-778a-4131-90d8-320d6c0d4536"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -152,6 +197,61 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                     ""action"": ""AbilityInput"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""437f5c94-f4c5-4836-a24e-142ae71a1604"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FirstSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""32172d9b-96ec-4db0-9023-65f892051065"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SecondSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3ae54adc-2ca3-4306-81c6-02357609c661"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ThirdSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6fd5e7de-c18e-47aa-acc6-137670d37e53"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FourthSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1d2ae781-9994-4523-b637-f2e5417e5939"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ScrollSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -164,6 +264,11 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         m_PlayerInputMain_MenuInput = m_PlayerInputMain.FindAction("MenuInput", throwIfNotFound: true);
         m_PlayerInputMain_AttackInput = m_PlayerInputMain.FindAction("AttackInput", throwIfNotFound: true);
         m_PlayerInputMain_AbilityInput = m_PlayerInputMain.FindAction("AbilityInput", throwIfNotFound: true);
+        m_PlayerInputMain_FirstSlot = m_PlayerInputMain.FindAction("FirstSlot", throwIfNotFound: true);
+        m_PlayerInputMain_SecondSlot = m_PlayerInputMain.FindAction("SecondSlot", throwIfNotFound: true);
+        m_PlayerInputMain_ThirdSlot = m_PlayerInputMain.FindAction("ThirdSlot", throwIfNotFound: true);
+        m_PlayerInputMain_FourthSlot = m_PlayerInputMain.FindAction("FourthSlot", throwIfNotFound: true);
+        m_PlayerInputMain_ScrollSlot = m_PlayerInputMain.FindAction("ScrollSlot", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -229,6 +334,11 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerInputMain_MenuInput;
     private readonly InputAction m_PlayerInputMain_AttackInput;
     private readonly InputAction m_PlayerInputMain_AbilityInput;
+    private readonly InputAction m_PlayerInputMain_FirstSlot;
+    private readonly InputAction m_PlayerInputMain_SecondSlot;
+    private readonly InputAction m_PlayerInputMain_ThirdSlot;
+    private readonly InputAction m_PlayerInputMain_FourthSlot;
+    private readonly InputAction m_PlayerInputMain_ScrollSlot;
     public struct PlayerInputMainActions
     {
         private @InputMap m_Wrapper;
@@ -237,6 +347,11 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         public InputAction @MenuInput => m_Wrapper.m_PlayerInputMain_MenuInput;
         public InputAction @AttackInput => m_Wrapper.m_PlayerInputMain_AttackInput;
         public InputAction @AbilityInput => m_Wrapper.m_PlayerInputMain_AbilityInput;
+        public InputAction @FirstSlot => m_Wrapper.m_PlayerInputMain_FirstSlot;
+        public InputAction @SecondSlot => m_Wrapper.m_PlayerInputMain_SecondSlot;
+        public InputAction @ThirdSlot => m_Wrapper.m_PlayerInputMain_ThirdSlot;
+        public InputAction @FourthSlot => m_Wrapper.m_PlayerInputMain_FourthSlot;
+        public InputAction @ScrollSlot => m_Wrapper.m_PlayerInputMain_ScrollSlot;
         public InputActionMap Get() { return m_Wrapper.m_PlayerInputMain; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -258,6 +373,21 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
             @AbilityInput.started += instance.OnAbilityInput;
             @AbilityInput.performed += instance.OnAbilityInput;
             @AbilityInput.canceled += instance.OnAbilityInput;
+            @FirstSlot.started += instance.OnFirstSlot;
+            @FirstSlot.performed += instance.OnFirstSlot;
+            @FirstSlot.canceled += instance.OnFirstSlot;
+            @SecondSlot.started += instance.OnSecondSlot;
+            @SecondSlot.performed += instance.OnSecondSlot;
+            @SecondSlot.canceled += instance.OnSecondSlot;
+            @ThirdSlot.started += instance.OnThirdSlot;
+            @ThirdSlot.performed += instance.OnThirdSlot;
+            @ThirdSlot.canceled += instance.OnThirdSlot;
+            @FourthSlot.started += instance.OnFourthSlot;
+            @FourthSlot.performed += instance.OnFourthSlot;
+            @FourthSlot.canceled += instance.OnFourthSlot;
+            @ScrollSlot.started += instance.OnScrollSlot;
+            @ScrollSlot.performed += instance.OnScrollSlot;
+            @ScrollSlot.canceled += instance.OnScrollSlot;
         }
 
         private void UnregisterCallbacks(IPlayerInputMainActions instance)
@@ -274,6 +404,21 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
             @AbilityInput.started -= instance.OnAbilityInput;
             @AbilityInput.performed -= instance.OnAbilityInput;
             @AbilityInput.canceled -= instance.OnAbilityInput;
+            @FirstSlot.started -= instance.OnFirstSlot;
+            @FirstSlot.performed -= instance.OnFirstSlot;
+            @FirstSlot.canceled -= instance.OnFirstSlot;
+            @SecondSlot.started -= instance.OnSecondSlot;
+            @SecondSlot.performed -= instance.OnSecondSlot;
+            @SecondSlot.canceled -= instance.OnSecondSlot;
+            @ThirdSlot.started -= instance.OnThirdSlot;
+            @ThirdSlot.performed -= instance.OnThirdSlot;
+            @ThirdSlot.canceled -= instance.OnThirdSlot;
+            @FourthSlot.started -= instance.OnFourthSlot;
+            @FourthSlot.performed -= instance.OnFourthSlot;
+            @FourthSlot.canceled -= instance.OnFourthSlot;
+            @ScrollSlot.started -= instance.OnScrollSlot;
+            @ScrollSlot.performed -= instance.OnScrollSlot;
+            @ScrollSlot.canceled -= instance.OnScrollSlot;
         }
 
         public void RemoveCallbacks(IPlayerInputMainActions instance)
@@ -297,5 +442,10 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         void OnMenuInput(InputAction.CallbackContext context);
         void OnAttackInput(InputAction.CallbackContext context);
         void OnAbilityInput(InputAction.CallbackContext context);
+        void OnFirstSlot(InputAction.CallbackContext context);
+        void OnSecondSlot(InputAction.CallbackContext context);
+        void OnThirdSlot(InputAction.CallbackContext context);
+        void OnFourthSlot(InputAction.CallbackContext context);
+        void OnScrollSlot(InputAction.CallbackContext context);
     }
 }
