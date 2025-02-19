@@ -15,6 +15,8 @@ public class Inventory : MonoBehaviour
     {
         weapons = new Weapon[slotCount-1];
         weapons[0] = new Pistol();
+        currentSlot = 0;
+        InventoryUI.Instance.SetActiveSlot(currentSlot);
     }
 
 
@@ -43,11 +45,28 @@ public class Inventory : MonoBehaviour
         {
             int direction = InputSub.ScrollMouseValue > 0 ? 1 : -1;
             currentSlot = (currentSlot + direction + slotCount) % slotCount;
+            InventoryUI.Instance.SetActiveSlot(currentSlot);
         }
 
-        if (InputSub.Slot1Input) currentSlot = 0;
-        if (InputSub.Slot2Input) currentSlot = 1;
-        if (InputSub.Slot3Input) currentSlot = 2;
-        if (InputSub.Slot4Input) currentSlot = 3;
-    }
+        if (InputSub.Slot1Input)
+        {
+            currentSlot = 0;
+            InventoryUI.Instance.SetActiveSlot(currentSlot);
+        }
+        if (InputSub.Slot2Input)
+        {
+            currentSlot = 1;
+            InventoryUI.Instance.SetActiveSlot(currentSlot);
+        }
+        if (InputSub.Slot3Input)
+        {
+            currentSlot = 2;
+            InventoryUI.Instance.SetActiveSlot(currentSlot);
+        }
+        if (InputSub.Slot4Input)
+        {
+            currentSlot = 3;
+            InventoryUI.Instance.SetActiveSlot(currentSlot);
+        }
+        }
 }
