@@ -12,7 +12,7 @@ public class Bullet : MonoBehaviour,IPoolable
     private Rigidbody rb;
     public event Action<IPoolable> Destroyed;
     public GameObject GameObject => gameObject;
-    [SerializeField]private float Timer=0;
+    private float Timer;
 
     private void Start()
     {
@@ -41,16 +41,14 @@ public class Bullet : MonoBehaviour,IPoolable
     private void OnTriggerEnter(Collider other)
     {
         IDamagatble damagable = other.GetComponent<IDamagatble>();
-        if (damagable != null && other.CompareTag("Bullet")==false)
+        if (damagable != null && other.CompareTag("Bullet")==false )
         {
             damagable.GetDamage(bulletDamage);
             Reset();
-            Debug.Log("Reset BulletTrigger");
         }
         else if(!other.CompareTag("Bullet")&& !other.CompareTag("Hero"))
         {
             Reset();
-            Debug.Log("Reset Trigger");
         }
     }
     public void Reset()

@@ -16,7 +16,6 @@ public class Inventory : MonoBehaviour
         weapons = new Weapon[slotCount-1];
         weapons[0] = new Pistol();
         currentSlot = 0;
-        InventoryUI.Instance.SetActiveSlot(currentSlot);
     }
 
 

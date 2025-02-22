@@ -19,6 +19,7 @@ public class InventoryUI : MonoBehaviour
     {
         if (Instance == null)Instance = this;
         SlotSize = new Vector2(50, 50);
+        SetActiveSlot(0);
     }
 
     // Update is called once per frame

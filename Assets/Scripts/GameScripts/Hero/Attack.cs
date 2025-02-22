@@ -13,6 +13,9 @@ public class Attack : MonoBehaviour
     [SerializeField] private float reloadingTest = 3f;
     [SerializeField] private float bulletSpeedTest = 3f;
     [SerializeField] private int bulletDamageTest = 10;
+    [SerializeField] private LayerMask layerMask;
+    [SerializeField] private Camera mainCamera;
+    [SerializeField] private float smoothValue;
     private Weapon currentWeapon;
     private bool Reloading;
     private bool isShooting = false;
@@ -21,12 +24,14 @@ public class Attack : MonoBehaviour
     private float ReloadWeapon;
     private float bulletSpeed;
     private int bulletDamage;
+    private float r;
 
 
     void Start()
     {
         currentWeapon = new Pistol();
         currentCapicity = currentWeapon.Capacity;
+        ShowBullets.instance.UpdatebulletCounts(currentCapicity);
         ReloadWeapon = isTest ? reloadingTest : currentWeapon.ReloadTime;
     }
 
@@ -40,11 +45,14 @@ public class Attack : MonoBehaviour
         }
         if (Reloading)
         {
+            ShowBullets.instance.StartReloading();
             ReloadTimer += Time.deltaTime;
             if (ReloadTimer >= ReloadWeapon)
             {
                 Reloading= false;
                 currentCapicity= currentWeapon.Capacity;
+                ShowBullets.instance.UpdatebulletCounts(currentCapicity);
+                ShowBullets.instance.StopReloading();
                 ReloadTimer = 0;
             }
         }
@@ -73,24 +81,35 @@ public class Attack : MonoBehaviour
         bulletDamage = isTest ? bulletDamageTest : currentWeapon.Damage;
 
         Vector2 dir = GetAttackDir();
-        
+
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg * -1;
+
+        float HeroAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, angle, ref r, smoothValue);
+        transform.rotation = Quaternion.Euler(0, HeroAngle, 0);
+
         Bullet bullet = PoolObject.Instance.GetObject(bulletPrefab);
         Vector3 worldPosition = bulletSpawnTransform.parent.TransformPoint(bulletSpawnTransform.localPosition);
         bullet.transform.position = worldPosition;
-        bullet.transform.rotation = transform.rotation;
+        
+        bullet.transform.rotation = Quaternion.Euler(0, angle, 90f);
+
         bullet.SetParametrsOfBullet(bulletSpeed, bulletDamage, dir);
         currentCapicity -= 1;
+        ShowBullets.instance.UpdatebulletCounts(currentCapicity);
         yield return new WaitForSeconds(1f / attSpeed);
         isShooting = false;
+
     }
     private Vector2 GetAttackDir()
     {
-        Vector3 mouseScreenPos = Input.mousePosition;
-        mouseScreenPos.z = Camera.main.WorldToScreenPoint(transform.position).z;
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
-        Vector3 attackDirection = (mouseWorldPos - transform.position).normalized;
-        Vector2 attackDirection2D = new Vector2(attackDirection.x, attackDirection.y);
-        return attackDirection2D;
+       
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, float.MaxValue, layerMask))
+        {
+            Vector3 direction = (hitInfo.point - transform.position).normalized;
+            return new Vector2(direction.x, direction.z);
+        }
+        return Vector2.zero;
     }
     
 
